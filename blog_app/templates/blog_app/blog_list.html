@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+{% load static %}
+{% load md2 %}
+{% block head %}
+  <title>Kevan Lee Lum Blog</title>
+  <style media="screen">
+    h1{
+      text-align: center;
+    }
+
+    a{
+      color: black;
+      text-decoration:none;
+    }
+
+    #header{
+      background-image: url("{% static 'images/blogHomeCover.JPG' %}");
+      background-position: center;
+      background-size: cover;
+      color: white;
+      height:500px;
+      padding-top:200px;
+    }
+
+    .post{
+      background-color: white;
+      border: 1px solid grey;
+      border-radius: 5px;
+      height: 500px;
+      margin: 10px 0 10px 0;
+      padding: 20px 20px 30px 20px;
+      position: relative;
+    }
+
+    .post-cover{
+      background-position: center;
+      background-size: cover;
+      height: 250px;
+      margin-bottom: 10px;
+    }
+
+    .post-title{
+      padding-bottom: 10px;
+      text-align: center;
+    }
+
+    .post-date{
+      font-size: 12px;
+      font-style: italic;
+      position: absolute;
+      bottom: 5px;
+      right: 20px;
+    }
+
+    .post:hover{
+      background-color: lightgrey;
+      transition: background-color 0.3s;
+    }
+
+    .post-link:hover{
+      text-decoration: none;
+      color: black;
+    }
+
+    .description{
+      margin-top: 10px;
+    }
+  </style>
+{% endblock head %}
+{% block body_block %}
+  <div class="container-fluid" id="header">
+    <h1 class="display-1"><strong>Welcome to my Blog!</strong></h1>
+  </div>
+
+  <div class="container-fluid">
+    <p style="text-align:center;">This blog does not have a comment section. If
+      you feel the need to contact me use the
+      <a href="{% url 'contact' %}"><u>contact page</u></a>
+      or find me on one of the social media links at the bottom of the page.</p>
+  </div>
+
+  <div class="container-fluid">
+    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+      <label class="btn btn-secondary active">
+        <input type="radio" name="options" id="option1" checked> All
+      </label>
+      <label class="btn btn-secondary">
+        <input type="radio" name="options" id="option2"> Website/programming
+      </label>
+      <label class="btn btn-secondary">
+        <input type="radio" name="options" id="option3"> Running
+      </label>
+      {% if user.is_authenticated %}
+        <label class="btn btn-secondary">
+          <input type="radio" name="options" id="option4"> Life
+        </label>
+      {% endif %}
+    </div>
+
+    <div class="row">
+      {% for post in posts %}
+        <div class="col-lg-6 col-md-12 {{ post.tags }}">
+          <a class="post-link" href="{% url 'blog_app:detail' slug=post.slug %}">
+            <div class="post">
+              {% if post.cover %}
+                <div class="post-cover" style="background-image: url({{ post.cover.url }});"></div>
+              {% else %}
+                <div class="" style="height:250px;">
+
+                </div>
+              {% endif %}
+              <h4 class="post-title">{{ post.title }}</h4>
+              <p class="description">{{ post.text|truncatewords:25 }}</p>
+              <p class="post-date">{{ post.date_created }}</p>
+            </div>
+          </a>
+        </div>
+      {% empty %}
+        <div class="container-fluid">
+          <p>No posts to show as yet :(</p>
+        </div>
+      {% endfor %}
+    </div>
+    {% include "pagination.html" %}
+  </div>
+{% endblock body_block %}
+{% block javascript %}
+
+{% endblock javascript %}

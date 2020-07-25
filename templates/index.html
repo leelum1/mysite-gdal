@@ -1,0 +1,174 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+  <title>Kevan Lee Lum - Home</title>
+  <style media="screen">
+    header{
+      background-image: url("{% static 'images/cover.jpg' %}");
+      background-position: center;
+      background-size: cover;
+      height: 95vh;
+      padding: none;
+    }
+
+    #stroke {
+      color: white;
+      margin:auto;
+      text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+    }
+
+    .post{
+      background-color: white;
+      border: 1px solid grey;
+      border-radius: 5px;
+      color: black;
+      height: 500px;
+      margin: 10px 0 10px 0;
+      padding: 20px 20px 30px 20px;
+      position: relative;
+    }
+
+    .post-cover{
+      background-position: center;
+      background-size: cover;
+      height: 250px;
+      margin-bottom: 10px;
+    }
+
+    .post-title{
+      padding-bottom: 10px;
+      text-align: center;
+    }
+
+    .post-date{
+      font-size: 12px;
+      font-style: italic;
+      position: absolute;
+      bottom: 5px;
+      right: 20px;
+    }
+
+    .post:hover{
+      background-color: lightgrey;
+      transition: background-color 0.3s;
+    }
+
+    .post-link:hover{
+      text-decoration: none;
+      color: black;
+    }
+
+    .description{
+      margin-top: 10px;
+    }
+
+    #bottom-img{
+      background-image: url({% static 'images/bottom.JPG' %});
+      background-size: cover;
+      background-position: center;
+      height: 600px;
+    }
+
+    footer{
+      margin-top: 0px;
+    }
+  </style>
+{% endblock head %}
+{% block body_block %}
+  <header>
+    <div class="container-fluid">
+      <h1 id="stroke">Hello</h1>
+    </div>
+  </header>
+
+  <section>
+    <div class="container-fluid row no-gutters">
+      <div class="col-lg-6 col-md-12">
+        <div class="">
+          <p>Welcome. This is my personal site. It is a place for me to write down stuff
+            and keep up with my interest in programming. You know who I am.</p>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-12">
+        <div class="" style="text-align:center;">
+          <img src="https://media.giphy.com/media/KYElw07kzDspaBOwf9/source.gif" alt="A gif from the office. Its pretty distracting">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="blog">
+    <div class="container-fluid" style="background-color:lightblue;">
+      <h2>Latest Blog Posts - <a href="{% url 'blog_app:list'%}">Blog Home</a></h2>
+      <div class="row">
+        {% if user.is_authenticated %}
+          {% for post in private_posts %}
+            <div class="col-lg-6 col-md-12">
+              <a class="post-link" href="{% url 'blog_app:detail' slug=post.slug %}">
+                <div class="post">
+                  {% if post.cover %}
+                    <div class="post-cover" style="background-image: url({{ post.cover.url }});"></div>
+                  {% else %}
+                    <div class="" style="height:250px;">
+
+                    </div>
+                  {% endif %}
+                  <h4 class="post-title">{{ post.title }}</h4>
+                  <p class="description">{{ post.text|truncatewords:25 }}</p>
+                  <p class="post-date">{{ post.date_created }}</p>
+                </div>
+              </a>
+            </div>
+          {% endfor %}
+        {% else %}
+          {% for post in public_posts %}
+            <div class="col-lg-6 col-md-12">
+              <a class="post-link" href="{% url 'blog_app:detail' slug=post.slug %}">
+                <div class="post">
+                  {% if post.cover %}
+                    <div class="post-cover" style="background-image: url({{ post.cover.url }});"></div>
+                  {% else %}
+                    <div class="" style="height:250px;">
+
+                    </div>
+                  {% endif %}
+                  <h4 class="post-title">{{ post.title }}</h4>
+                  <p class="description">{{ post.text|truncatewords:25 }}</p>
+                  <p class="post-date">{{ post.date_created }}</p>
+                </div>
+              </a>
+            </div>
+          {% endfor %}
+        {% endif %}
+      </div>
+      <p style="margin-top:20px;text-align:center;">
+        <a class="btn btn-primary" style="width:250px;" href="{% url 'blog_app:list'%}">More Posts</a>
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="container-fluid">
+      <h2>GIS Projects</h2>
+    </div>
+
+    <div class="container-fluid" id="watersheds">
+      <h4>Trinidad and Tobago Watersheds</h4>
+      <a class="btn btn-primary" style="width:200px;" href="{% url 'watersheds'%}">See Map</a>
+    </div>
+
+    <div class="container-fluid" id="watersheds">
+      <h4>Hiking in Trinidad</h4>
+      <a class="btn btn-primary" style="width:200px;" href="{% url 'hike_app:list'%}">See Map</a>
+    </div>
+  </section>
+
+  <section>
+    <div class="container-fluid" id="bottom-img">
+
+    </div>
+  </section>
+{% endblock body_block %}
+{% block javascript %}
+
+{% endblock javascript %}

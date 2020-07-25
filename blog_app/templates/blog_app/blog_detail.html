@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load static %}
+{% load md2 %}
+{% block head %}
+  <title>{{ post.title }}</title>
+  <meta name="description" content="">
+  <style media="screen">
+    {% if post.cover %}
+      #cover{
+        background-image: url({{ post.cover.url }});
+        background-position: center;
+        background-size: cover;
+        height: 500px;
+      }
+    {% endif %}
+  </style>
+{% endblock head %}
+{% block body_block %}
+  {% if post.cover %}
+    <div id="cover"></div>
+  {% endif %}
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-8 col-md-12">
+          <h1 class="display-4 my-4">{{ post.title }}</h1>
+          {{ post.text|markdown }}
+      </div>
+      <div class="col-lg-4 col-md-12">
+        <div class="" style="background-color:lightgrey;">
+          <a class="btn btn-primary" href="{% url 'blog_app:list' %}" style="width:100%;">Blog Home</a>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock body_block %}

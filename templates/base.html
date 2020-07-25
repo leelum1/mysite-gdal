@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="author" content="Kevan Lee Lum">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon/favicon.ico' %}"/>
+    <link rel="stylesheet" href="{% static 'css/master.css' %}">
+    {% block head %}{% endblock head %}
+    <style media="screen">
+      .navbar-brand{
+        width: 40vw
+      }
+
+      .nav-item{
+        border-left: 1px solid grey;
+        margin: auto;
+        text-align: center;
+        width: 15vw;
+      }
+
+      /*SMALL SCREEN SIZES*/
+      @media screen and (max-width: 991px) {
+        .nav-item{
+          border-left: none;
+          margin: auto;
+          text-align: center;
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #d383fe  ;">
+      <a class="navbar-brand" href="{% url 'index' %}">leelum1</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav">
+          <a class="nav-item nav-link" href="{% url 'blog_app:list' %}">Blog</a>
+          <a class="nav-item nav-link" href="{% url 'hike_app:list' %}">Hiking</a>
+          <a class="nav-item nav-link" href="{% url 'contact' %}">Contact</a>
+          {% if user.is_authenticated and user.is_superuser %}
+            <a class="nav-item nav-link" href={% url 'admin:index' %}>Welcome {{ user.first_name }}</a>
+          {% elif user.is_authenticated %}
+            <span class="nav-item">Welcome {{ user.first_name }} <a href="{% url 'logout' %}" class="btn btn-outline-warning">Logout</a></span>
+          {% else %}
+            <a class="nav-item nav-link" href="{% url 'login' %}?next={{request.path}}" class="btn btn-outline-warning">Login</a>
+          {% endif %}
+        </div>
+      </div>
+    </nav>
+
+    <div id="mainblock">
+      {% block body_block %}
+
+      {% endblock %}
+    </div>
+
+
+    <footer>
+      <div class="row">
+        <div class="col">
+          <span>Started 2020. <em>A rona project</em> </span>
+        </div>
+        <div class="col">
+          <div class="" id="social" style="text-align:right;">
+            <a target="_blank" href="https://www.instagram.com/kevanleelum/?hl=en"><img src="{% static 'images/instagram-brands.svg' %}" height=40 alt="Instagram"></a>
+            <a target="_blank" href="https://www.facebook.com/kevan.leelum/"><img src="{% static 'images/facebook-square-brands.svg' %}" height=40 alt="Facebook"></a>
+            <a target="_blank" href="https://www.linkedin.com/in/kevan-lee-lum-388a7125/"><img src="{% static 'images/linkedin-brands.svg' %}" height=40 alt="LinkedIn"></a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </body>
+  {% block javascript %}{% endblock %}
+</html>

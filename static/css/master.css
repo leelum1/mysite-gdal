@@ -1,0 +1,29 @@
+h1{
+  text-align: center;
+}
+
+p {
+  text-align: justify;
+}
+
+img{
+  max-width: 100%;
+}
+
+#mainblock{
+  min-height: 100vh;
+}
+
+.container-fluid{
+  padding: 30px 5% 30px 5%;
+}
+
+footer{
+  background-color: lightgrey;
+  margin-top: 50px;
+  padding: 20px 3% 20px 3%;
+}
+/*SMALL SCREEN SIZES*/
+@media screen and (max-width: 991px) {
+
+}

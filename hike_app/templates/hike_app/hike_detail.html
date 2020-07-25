@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+{% load static %}
+{% load md2 %}
+{% block head %}
+  <title>{{ hike.name }}</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
+  <style media="screen">
+    #main{
+      /* https://www.toptal.com/designers/subtlepatterns/patterns/topography.png */
+      background-image: url("{% static 'images/topography.png' %}");
+    }
+    .cover{
+      border: 1px solid black;
+    }
+
+    .caption{
+      font-style: italic;
+      text-align: center;
+      width: 100%;
+    }
+
+    .description{
+      margin: auto;
+      max-width: 1000px;
+    }
+
+    #map{
+      height: 300px;
+      width: 100%;
+      border: 1px solid black;
+      margin-top: 10px;
+    }
+
+    .nearby-hike{
+      background-color: white;
+      border: 1px solid grey;
+      margin: auto;
+      padding: 20px 20px 30px 20px;
+      position: relative;
+      width: 100%;
+    }
+
+    .hike-cover{
+      background-color: black;
+      height: 250px;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+  </style>
+{% endblock head %}
+{% block body_block %}
+  <div id="main">
+    <div class="container-fluid" style="text-align:center;">
+      <h1 class="display-4 pb-3">{{ hike.name }}</h1>
+
+      <a href="{{ hike.cover.url }}">
+        <img class="cover" src="{{ hike.cover.url }}" height="500" alt="{{ hike.name }}">
+      </a>
+      <p class="caption">caption</p>
+
+      <div class="description">{{ hike.description|markdown }}</div>
+    </div>
+
+    <div class="container-fluid">
+      <div id="map"></div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row">
+        {% for image in images  %}
+          <div class="col-lg-4 col-md-6 col-sm-12">
+              <a href="{{ image.image.url }}" target="_blank">
+                <img src="{{ image.image.url }}" height="300" alt="{{ image.hike.name }}">
+              </a>
+            {% if image.caption %}
+              <span class="caption">{{ image.caption }}</span>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid">
+    <h2 class="mb-3">Nearby Hikes</h2>
+    <div class="row">
+      {% for hike in similar_hikes %}
+        <div class="nearby-hike col-xl-4 col-md-6 col-sm-12">
+          <a class="post-link" href="{% url 'hike_app:detail' slug=hike.slug %}">
+            {% if hike.cover %}
+              <div class="hike-cover">
+                <img src="{{ hike.cover.url }}" height="250" alt="">
+              </div>
+            {% else %}
+              <div class="" style="height:250px;"></div>
+            {% endif %}
+            <h4 class="">{{ hike.name }}</h4>
+            <p class="">Difficulty: {{ hike.get_difficulty_display }}</p>
+          </a>
+        </div>
+      {% empty %}
+        <p>No posts to show as yet :(</p>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="container-fluid">
+    <a href="{% url 'hike_app:list' %}">See all Hikes</a>
+    <a href="{% url 'hike_app:map' %}">See Map</a>
+  </div>
+{% endblock body_block %}
+{% block javascript %}
+  <script type="text/javascript">
+    var northing = {{ hike.trailhead_point.y }};
+    var easting = {{ hike.trailhead_point.x }};
+
+    var mymap = L.map('map').setView([easting, northing], 12);
+
+    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+      attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+      maxZoom: 18,
+      id: 'mapbox/streets-v11',
+      tileSize: 512,
+      zoomOffset: -1,
+        accessToken: 'pk.eyJ1IjoibGVlbHVtMSIsImEiOiJjamZmb3BzeW4wbXg2MndsOTE5MGM3Nzd3In0.aem1yMDKhuLp0fUGKhxJrg'
+    }).addTo(mymap);
+
+    var marker = L.marker([easting, northing]).addTo(mymap);
+  </script>
+{% endblock javascript %}
