@@ -26,7 +26,7 @@ class ContactFormView(FormView):
             name=form.cleaned_data['name']
             email=form.cleaned_data['email']
             message=form.cleaned_data['message']
-            send_mail('Website Query from ' + name, message + "\n\nReply to " + name + " at " + email, 'queries@waterresourcestt.com', ['kevanleelum@gmail.com',],
+            send_mail('Website Query from ' + name, message + "\n\nReply to " + name + " at " + email, 'queries@kevanleelum.com', ['kevanleelum@gmail.com',],
                 fail_silently=False,
             )
             return JsonResponse({"message": "Your message has bean sent. Returning to the home page now..."})
