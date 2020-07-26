@@ -3,7 +3,7 @@
 {% load widget_tweaks %}
 {% block head %}
   <title>Contact</title>
-  <meta name="description" content="Contact page for waterresourcestt.com">
+  <meta name="description" content="Contact page for kevanleelum.com">
   {# Full jquery is needed for ajax #}
   <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
   <style media="screen">
@@ -23,7 +23,7 @@
       margin-bottom: 20px;
     }
   </style>
-  <script src="{% static 'js/csrf.ajax.js'%}" charset="utf-8"></script>
+  {# <script src="{% static 'js/csrf.ajax.js'%}" charset="utf-8"></script> #}
 {% endblock head %}
 {% block body_block %}
   <div class="container-fluid contact">
@@ -32,7 +32,7 @@
       please fill out the form below. Messages considered to be spam will be ignored.</p>
 
     <form class="contact-form" action="{% url 'contact' %}" method="post" next-url="{% url 'index' %}">
-      {% csrf_token %}
+      {# {% csrf_token %} #}
       <div class="form-group">
         {% for field in form %}
           <div class="fieldWrapper">
