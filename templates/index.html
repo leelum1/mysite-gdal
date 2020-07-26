@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load md2 %}
 {% block head %}
   <title>Kevan Lee Lum - Home</title>
   <style media="screen">
@@ -62,6 +63,24 @@
       margin-top: 10px;
     }
 
+    #gis{
+      background-image: url("{% static 'images/topography.png' %}");
+    }
+
+    #watershed-cover{
+      background-image: url("{% static 'images/watershed-cover.png' %}");
+      background-position: center;
+      background-size: cover;
+      height: 300px;
+    }
+
+    #hiking-cover{
+      background-image: url("{% static 'images/hiking-cover.png' %}");
+      background-position: center;
+      background-size: cover;
+      height: 300px;
+    }
+
     #bottom-img{
       background-image: url({% static 'images/bottom.JPG' %});
       background-size: cover;
@@ -82,16 +101,18 @@
   </header>
 
   <section>
-    <div class="container-fluid row no-gutters">
-      <div class="col-lg-6 col-md-12">
-        <div class="">
-          <p>Welcome. This is my personal site. It is a place for me to write down stuff
-            and keep up with my interest in programming. You know who I am.</p>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-6 col-md-12">
+          <div class="container-fluid">
+            <p>Welcome. This is my personal site. It is a place for me to write down stuff
+              and keep up with my interest in programming. You know who I am.</p>
+          </div>
         </div>
-      </div>
-      <div class="col-lg-6 col-md-12">
-        <div class="" style="text-align:center;">
-          <img src="https://media.giphy.com/media/KYElw07kzDspaBOwf9/source.gif" alt="A gif from the office. Its pretty distracting">
+        <div class="col-lg-6 col-md-12">
+          <div class="container-fluid" style="text-align:center;">
+            <img src="https://media.giphy.com/media/KYElw07kzDspaBOwf9/source.gif" alt="A gif from the office. Its pretty distracting">
+          </div>
         </div>
       </div>
     </div>
@@ -100,6 +121,7 @@
   <section id="blog">
     <div class="container-fluid" style="background-color:lightblue;">
       <h2>Latest Blog Posts - <a href="{% url 'blog_app:list'%}">Blog Home</a></h2>
+
       <div class="row">
         {% if user.is_authenticated %}
           {% for post in private_posts %}
@@ -148,18 +170,35 @@
   </section>
 
   <section>
-    <div class="container-fluid">
+    <div class="container-fluid py-5" id="gis">
       <h2>GIS Projects</h2>
+      <p>Here's a couple of GIS projects that I worked on. There will hopefully be more in the future.</p>
     </div>
 
-    <div class="container-fluid" id="watersheds">
-      <h4>Trinidad and Tobago Watersheds</h4>
-      <a class="btn btn-primary" style="width:200px;" href="{% url 'watersheds'%}">See Map</a>
+    <div class="row no-gutters" style="border-top:1px solid black;">
+      <div class="col-lg-5 col-md-12">
+        <div class="" id="watershed-cover"></div>
+      </div>
+      <div class="col-lg-7 col-md-12">
+        <div class="container-fluid" style="text-align:center;">
+          <h4 style="text-decoration:underline;">Trinidad and Tobago Watersheds</h4>
+          <p style="text-align:center;">An interactive map of the watersheds of Trinidad and Tobago</p>
+          <a class="btn btn-primary my-3" style="width:200px;" href="{% url 'watersheds'%}">See Map</a>
+        </div>
+      </div>
     </div>
 
-    <div class="container-fluid" id="watersheds">
-      <h4>Hiking in Trinidad</h4>
-      <a class="btn btn-primary" style="width:200px;" href="{% url 'hike_app:list'%}">See Map</a>
+    <div class="row no-gutters" style="border-top:1px solid black;">
+      <div class="col-lg-5 col-md-12">
+        <div class="" id="hiking-cover"></div>
+      </div>
+      <div class="col-lg-7 col-md-12">
+        <div class="container-fluid" style="text-align:center;">
+          <h4 style="text-decoration:underline;">Hiking in Trinidad</h4>
+          <p style="text-align:center;">An interactive map of hikes in Trinidad and Tobago.</p>
+          <a class="btn btn-primary my-3" style="width:200px;" href="{% url 'hike_app:list'%}">See Map</a>
+        </div>
+      </div>
     </div>
   </section>
 

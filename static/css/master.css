@@ -4,6 +4,7 @@ h1{
 
 p {
   text-align: justify;
+  max-width: 1000px;
 }
 
 img{

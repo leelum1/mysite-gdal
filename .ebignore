@@ -1,0 +1,8 @@
+__pycache__
+*.pyc
+images/
+markdownx/
+media/
+migrations/
+static_root/
+secrets.json
