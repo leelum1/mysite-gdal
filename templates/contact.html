@@ -6,7 +6,6 @@
   <meta name="description" content="Contact page for kevanleelum.com">
   {# Full jquery is needed for ajax #}
   <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
-  <script src="{% static 'js/csrf.ajax.js' %}" charset="utf-8"></script>
   <style media="screen">
     input{
       margin-bottom: 20px;
@@ -33,6 +32,21 @@
 
     <form class="contact-form" action="{% url 'contact' %}" method="post" next-url="{% url 'index' %}">
       {% csrf_token %}
+      <script type="text/javascript">
+        const csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
+
+        function csrfSafeMethod(method) {
+          // these HTTP methods do not require CSRF protection
+          return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+        }
+        $.ajaxSetup({
+            beforeSend: function(xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+            }
+        });
+      </script>
       <div class="form-group">
         {% for field in form %}
           <div class="fieldWrapper">
