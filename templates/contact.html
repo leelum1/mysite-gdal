@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 {% load static %}
 {% load widget_tweaks %}
 {% block head %}
@@ -23,7 +23,6 @@
       margin-bottom: 20px;
     }
   </style>
-  {# <script src="{% static 'js/csrf.ajax.js'%}" charset="utf-8"></script> #}
 {% endblock head %}
 {% block body_block %}
   <div class="container-fluid contact">
@@ -32,7 +31,7 @@
       please fill out the form below. Messages considered to be spam will be ignored.</p>
 
     <form class="contact-form" action="{% url 'contact' %}" method="post" next-url="{% url 'index' %}">
-      {# {% csrf_token %} #}
+      {% csrf_token %}
       <div class="form-group">
         {% for field in form %}
           <div class="fieldWrapper">
@@ -45,16 +44,18 @@
           </div>
         {% endfor %}
       </div>
-      <div class="g-recaptcha" data-sitekey="6LchHGsUAAAAANEB0mug4JNyehtHfRjnxgDn9_ZR" data-callback="recaptchaEnable"></div>
+      <div class="g-recaptcha" data-sitekey="6LfwgLYZAAAAABxHG1bDKPA_OiUiNlER6eN2ZnVP" data-callback="recaptchaEnable"></div>
       <input id="submit-button" class="btn btn-primary" type="submit" value="Send Message">
     </form>
   </div>
 {% endblock body_block %}
 {% block javascript %}
-  {# <script type="text/javascript">
+  <script type="text/javascript">
+    // using jQuery
     const csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
+
     function csrfSafeMethod(method) {
-    // these HTTP methods do not require CSRF protection
+      // these HTTP methods do not require CSRF protection
       return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
     }
     $.ajaxSetup({
@@ -64,7 +65,7 @@
             }
         }
     });
-  </script> #}
+  </script>
 
   <script src='https://www.google.com/recaptcha/api.js'></script>
 
