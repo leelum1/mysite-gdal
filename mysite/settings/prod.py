@@ -2,6 +2,8 @@ from .base import *
 
 DEBUG = False
 
+AWS_DEFAULT_ACL = None
+
 ALLOWED_HOSTS = [
     'mysite-env.eba-ssxmmhfu.us-east-1.elasticbeanstalk.com',
     'www.kevanleelum.com',
@@ -17,9 +19,9 @@ EMAIL_USE_TLS = True
 EMAIL_TIMEOUT = 60
 
 # SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-# SECURE_SSL_REDIRECT = True
-# SESSION_COOKIE_SECURE = True
-# CSRF_COOKIE_SECURE = True
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 
 DATABASES = {
     'default': {
