@@ -2,7 +2,11 @@ from .base import *
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['mysite-env.eba-ssxmmhfu.us-east-1.elasticbeanstalk.com', 'www.kevanleelum.com',]
+ALLOWED_HOSTS = [
+    'mysite-env.eba-ssxmmhfu.us-east-1.elasticbeanstalk.com',
+    'www.kevanleelum.com',
+    '172.31.20.208'
+    ]
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = os.environ['EMAIL_HOST']
@@ -16,6 +20,8 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SECURE_SSL_REDIRECT = True
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
+
+# CSRF_USE_SESSIONS = True
 
 DATABASES = {
     'default': {
