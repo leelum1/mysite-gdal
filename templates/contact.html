@@ -31,7 +31,7 @@
       please fill out the form below. Messages considered to be spam will be ignored.</p>
 
     <form class="contact-form" action="{% url 'contact' %}" method="post" next-url="{% url 'index' %}">
-
+      {% csrf_token %}
       <div class="form-group">
         {% for field in form %}
           <div class="fieldWrapper">
@@ -50,37 +50,6 @@
   </div>
 {% endblock body_block %}
 {% block javascript %}
-  <script type="text/javascript">
-    function getCookie(name) {
-        let cookieValue = null;
-        if (document.cookie && document.cookie !== '') {
-            const cookies = document.cookie.split(';');
-            for (let i = 0; i < cookies.length; i++) {
-                const cookie = cookies[i].trim();
-                // Does this cookie string begin with the name we want?
-                if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
-            }
-        }
-        return cookieValue;
-    }
-    const csrftoken = getCookie('csrftoken');
-
-    function csrfSafeMethod(method) {
-      // these HTTP methods do not require CSRF protection
-      return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-    }
-    $.ajaxSetup({
-        beforeSend: function(xhr, settings) {
-            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-                xhr.setRequestHeader("X-CSRFToken", csrftoken);
-            }
-        }
-    });
-  </script>
-
   <script src='https://www.google.com/recaptcha/api.js'></script>
 
   <script type="text/javascript">
