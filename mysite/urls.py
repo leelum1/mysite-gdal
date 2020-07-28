@@ -29,11 +29,10 @@ urlpatterns = [
     path('blog/', include('blog_app.urls')),
     path('steelbands/', include('steelbands_app.urls')),
     path('markdownx/', include('markdownx.urls')),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-# The static part only works in development mode
+]
 
 if settings.DEBUG:
     import debug_toolbar
     urlpatterns += [
         path('__debug__/', include(debug_toolbar.urls)),
-    ]
+    ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
