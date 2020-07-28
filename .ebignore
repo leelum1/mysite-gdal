@@ -4,4 +4,5 @@ images/
 markdownx/
 media/
 migrations/
+static/
 static_root/
