@@ -2,7 +2,7 @@ from .base import *
 
 DEBUG = False
 
-AWS_DEFAULT_ACL = None
+AWS_DEFAULT_ACL = 'public-read'
 
 ALLOWED_HOSTS = [
     'mysite-env.eba-ssxmmhfu.us-east-1.elasticbeanstalk.com',
