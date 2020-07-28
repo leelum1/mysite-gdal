@@ -2,8 +2,6 @@ from .base import *
 
 DEBUG = False
 
-AWS_DEFAULT_ACL = 'public-read'
-
 ALLOWED_HOSTS = [
     'mysite-env.eba-ssxmmhfu.us-east-1.elasticbeanstalk.com',
     'www.kevanleelum.com',
@@ -44,15 +42,13 @@ AWS_S3_REGION_NAME = os.environ['AWS_S3_REGION_NAME']
 AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
 AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
 
+AWS_DEFAULT_ACL = None
+
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
-AWS_LOCATION = 'static'
-STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
+STATIC_LOCATION = 'static'
+STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, STATIC_LOCATION)
+STATICFILES_STORAGE = 'custom_storages.StaticStorage'
 
-from storages.backends.s3boto3 import S3Boto3Storage
-
-class MediaStorage(S3Boto3Storage):
-    location = 'media'
-    file_overwrite = False
-
-DEFAULT_FILE_STORAGE = 'MediaStorage'
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+PUBLIC_MEDIA_LOCATION = 'media'
+MEDIA_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, PUBLIC_MEDIA_LOCATION)
+DEFAULT_FILE_STORAGE = 'custom_storages.PublicMediaStorage'
