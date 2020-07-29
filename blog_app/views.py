@@ -1,5 +1,6 @@
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView
 from .models import Post
+from .forms import PostForm
 
 # Create your views here.
 class PostListView(ListView):
@@ -21,3 +22,8 @@ class PostDetailView(DetailView):
         ctx = super(PostDetailView, self).get_context_data(**kwargs)
         ctx['posts'] = Post.objects.all()[:5][::-1]
         return ctx
+
+class PostCreateView(CreateView):
+    model = Post
+    form_class = PostForm
+    template_name = 'blog_app/blog_form.html'
