@@ -1,6 +1,6 @@
 from .base import *
 
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     'mysite-env.eba-ssxmmhfu.us-east-1.elasticbeanstalk.com',

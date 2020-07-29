@@ -1,4 +1,5 @@
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.urls import reverse, reverse_lazy
 from .models import Post
 from .forms import PostForm
 
@@ -27,3 +28,13 @@ class PostCreateView(CreateView):
     model = Post
     form_class = PostForm
     template_name = 'blog_app/blog_form.html'
+
+class PostUpdateView(UpdateView):
+    model = Post
+    form_class = PostForm
+    template_name = 'blog_app/blog_form.html'
+
+class PostDeleteView(DeleteView):
+    model = Post
+    template_name = 'blog_app/blog_delete.html'
+    success_url = reverse_lazy('blog_app:list')

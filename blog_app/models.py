@@ -22,7 +22,6 @@ class Post(models.Model):
     text = MarkdownxField()
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
-    file = models.FileField(upload_to='blog_images/', blank=True)
 
     class Meta:
         ordering = ['-date_updated']
