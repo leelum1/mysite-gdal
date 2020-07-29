@@ -1,8 +1,3 @@
-__pycache__
-*.pyc
-images/
-markdownx/
 media/
-migrations/
 static/
 static_root/
