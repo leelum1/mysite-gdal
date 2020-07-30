@@ -13,6 +13,33 @@
         height: 500px;
       }
     {% endif %}
+
+    code{
+      background-color: lightgray;
+    }
+
+    .sidebar{
+      background-color: lightgrey;
+      border-radius: 10px;
+      height: 100%;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .post-link{
+      color: black;
+    }
+
+    .related-post{
+      border: 1px solid black;
+      margin-bottom: 10px;
+    }
+
+    .related-post-cover{
+      background-position: center;
+      background-size: cover;
+      height: 150px;
+    }
   </style>
 {% endblock head %}
 {% block body_block %}
@@ -21,15 +48,30 @@
   {% endif %}
   <div class="container-fluid">
     <div class="row">
-      <div class="col-lg-8 col-md-12">
+      <div class="col-xl-8 col-lg-12">
           <h1 class="display-4 my-4">{{ post.title }}</h1>
           {{ post.text|markdown }}
       </div>
-      <div class="col-lg-4 col-md-12">
-        <div class="" style="background-color:lightgrey;">
-          <a class="btn btn-primary" href="{% url 'blog_app:list' %}" style="width:100%;">Blog Home</a>
+      <div class="col-xl-4 col-lg-12">
+        <div class="sidebar">
+          {% for post in related_posts %}
+            <a class="post-link" href="{% url 'blog_app:detail' slug=post.slug %}">
+              <div class="related-post">
+                {% if post.cover %}
+                  <div class="related-post-cover" style="background-image: url({{ post.cover.url }});"></div>
+                {% endif %}
+                <h6 class="my-2"><strong>{{ post.title }}</strong></h6>
+              </div>
+            </a>
+          {% endfor %}
+          <a class="btn btn-primary" href="{% url 'blog_app:list' %}" style="width:200px;">Blog Home</a>
         </div>
       </div>
     </div>
+  </div>
+  <div class="container-fluid">
+    {% if user.is_superuser %}
+      <a class="btn btn-warning" href="{% url 'blog_app:update' slug=post.slug %}">Update Post</a>
+    {% endif %}
   </div>
 {% endblock body_block %}

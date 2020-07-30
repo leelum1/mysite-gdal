@@ -17,11 +17,20 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.sitemaps.views import sitemap
 from . import views
+from .sitemaps import StaticViewSitemap, BlogSitemap, HikeSitemap
+
+sitemaps = {
+    'static': StaticViewSitemap,
+    'blog': BlogSitemap,
+    'hike': HikeSitemap,
+}
 
 urlpatterns = [
     path('cookies/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
     path('', views.IndexTemplateView.as_view(), name='index'),
     path('contact/', views.ContactFormView.as_view(), name='contact'),
     path('hiking/', include('hike_app.urls')),

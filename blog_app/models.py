@@ -3,11 +3,10 @@ from django.db.models.signals import pre_save
 from django.urls import reverse
 from django.utils.text import slugify
 from markdownx.models import MarkdownxField
-from multiselectfield import MultiSelectField
 
 # Create your models here.
 class Post(models.Model):
-    tagChoices = (
+    CATEGORIES = (
         ('house', 'House Projects'),
         ('life', 'Life'),
         ('running', 'Running'),
@@ -15,7 +14,7 @@ class Post(models.Model):
     )
     title = models.CharField(max_length=225, unique=True)
     slug = models.SlugField()
-    tags = MultiSelectField(choices=tagChoices) #https://pypi.org/project/django-multiselectfield/
+    category = models.CharField(max_length=125, choices=CATEGORIES)
     is_private = models.BooleanField(default=False)
     is_published = models.BooleanField(default=False)
     cover = models.ImageField(upload_to='blog_images/', blank=True)

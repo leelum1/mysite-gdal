@@ -11,7 +11,7 @@ class PostListView(ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        queryset = Post.objects.filter(is_private=False)
+        queryset = Post.objects.filter(is_private=False).order_by('-date_updated')
         return queryset
 
 class PostDetailView(DetailView):
@@ -21,7 +21,7 @@ class PostDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         ctx = super(PostDetailView, self).get_context_data(**kwargs)
-        ctx['posts'] = Post.objects.all()[:5][::-1]
+        ctx['related_posts'] = Post.objects.filter(category=self.get_object().category).exclude(id=self.get_object().id).order_by('-date_updated')[:5][::-1]
         return ctx
 
 class PostCreateView(CreateView):

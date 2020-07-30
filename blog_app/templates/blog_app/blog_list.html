@@ -83,26 +83,18 @@
     {% if user.is_superuser %}
       <a class="btn btn-primary" href="{% url 'blog_app:create' %}">New Post</a>
     {% endif %}
-    <div class="btn-group btn-group-toggle" data-toggle="buttons">
-      <label class="btn btn-secondary active">
-        <input type="radio" name="options" id="option1" checked> All
-      </label>
-      <label class="btn btn-secondary">
-        <input type="radio" name="options" id="option2"> Website/programming
-      </label>
-      <label class="btn btn-secondary">
-        <input type="radio" name="options" id="option3"> Running
-      </label>
+    <div class="btn-group" role="group" aria-label="Basic example">
+      <button type="button" onclick="filter()" class="btn btn-secondary">All</button>
+      <button type="button" onclick="filter('website')" class="btn btn-secondary">Website/programming</button>
+      <button type="button" onclick="filter('house')" class="btn btn-secondary">House Projects</button>
       {% if user.is_authenticated %}
-        <label class="btn btn-secondary">
-          <input type="radio" name="options" id="option4"> Life
-        </label>
+        <button type="button" onclick="filter('life')" class="btn btn-secondary">Life</button>
       {% endif %}
     </div>
 
     <div class="row">
       {% for post in posts %}
-        <div class="col-lg-6 col-md-12 {{ post.tags }}">
+        <div class="col-lg-6 col-md-12 post-col {{ post.category }}">
           <a class="post-link" href="{% url 'blog_app:detail' slug=post.slug %}">
             <div class="post">
               {% if post.cover %}
@@ -114,7 +106,7 @@
               {% endif %}
               <h4 class="post-title">{{ post.title }}</h4>
               <p class="description">{{ post.text|truncatewords:25 }}</p>
-              <p class="post-date">{{ post.date_created }}</p>
+              <p class="post-date">Updated: {{ post.date_updated }}</p>
             </div>
           </a>
         </div>
@@ -128,5 +120,14 @@
   </div>
 {% endblock body_block %}
 {% block javascript %}
-
+  <script type="text/javascript">
+    function filter(category) {
+      if (category==null) {
+        $('.post-col').show();
+      }else {
+        $('.post-col').hide();
+        $('.' + category).show();
+      }
+    }
+  </script>
 {% endblock javascript %}
