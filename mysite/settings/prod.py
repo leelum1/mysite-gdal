@@ -1,6 +1,6 @@
 from .base import *
 
-# GDAL_LIBRARY_PATH = os.environ['GDAL_LIBRARY_PATH']
+GDAL_LIBRARY_PATH = os.environ['GDAL_LIBRARY_PATH']
 
 DEBUG = True
 
