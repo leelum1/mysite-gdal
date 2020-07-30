@@ -10,7 +10,6 @@ class HikeListView(ListView):
     model = Hike
     template_name = 'hike_app/hike_list.html'
     context_object_name = 'hikes'
-    # paginate_by = 10
 
 class HikeDetailView(DetailView):
     model = Hike

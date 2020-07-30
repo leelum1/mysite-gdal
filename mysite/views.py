@@ -16,6 +16,9 @@ class IndexTemplateView(TemplateView):
 class WatershedMapTemplateView(TemplateView):
     template_name = 'watersheds.html'
 
+class LegalTemplateView(TemplateView):
+    template_name = 'legal.html'
+
 class ContactFormView(FormView):
     form_class = ContactForm
     template_name = 'contact.html'

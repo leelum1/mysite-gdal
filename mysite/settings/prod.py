@@ -1,9 +1,9 @@
 from .base import *
 
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
-    'mysite-env.eba-ssxmmhfu.us-east-1.elasticbeanstalk.com',
+    # 'mysite-env.eba-ssxmmhfu.us-east-1.elasticbeanstalk.com',
     'www.kevanleelum.com',
     '172.31.20.208'
     ]

@@ -32,6 +32,7 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
     path('', views.IndexTemplateView.as_view(), name='index'),
+    path('legal/', views.LegalTemplateView.as_view(), name='legal'),
     path('contact/', views.ContactFormView.as_view(), name='contact'),
     path('hiking/', include('hike_app.urls')),
     path('watershed-map/', views.WatershedMapTemplateView.as_view(), name='watersheds'),
