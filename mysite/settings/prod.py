@@ -1,13 +1,14 @@
 from .base import *
 
-GDAL_LIBRARY_PATH = os.environ['GDAL_LIBRARY_PATH']
+# GDAL_LIBRARY_PATH = os.environ['GDAL_LIBRARY_PATH']
 
 DEBUG = True
 
 ALLOWED_HOSTS = [
     # 'mysite-env.eba-ssxmmhfu.us-east-1.elasticbeanstalk.com',
     'www.kevanleelum.com',
-    '172.31.20.208'
+    '172.31.20.208',
+    '3.223.179.99',
     ]
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
