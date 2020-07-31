@@ -21,10 +21,10 @@ if os.name == 'nt':
     if '64' in platform.architecture()[0]:
         OSGEO4W += "64"
     assert os.path.isdir(OSGEO4W), "Directory does not exist: " + OSGEO4W
-    os.environ['OSGEO4W_ROOT'] = OSGEO4W
+    # os.environ['OSGEO4W_ROOT'] = OSGEO4W
     os.environ['PROJ_LIB'] = OSGEO4W + r"\share\proj"
     GDAL_LIBRARY_PATH = r'C:\OSGeo4W\bin\gdal300'
-    os.environ['PATH'] = OSGEO4W + r"\bin;" + os.environ['PATH']
+    # os.environ['PATH'] = OSGEO4W + r"\bin;" + os.environ['PATH']
 
 with open('secrets.json') as f:
     secrets = json.loads(f.read())
