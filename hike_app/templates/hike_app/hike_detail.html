@@ -114,7 +114,7 @@
   <script type="text/javascript">
     var northing = {{ hike.trailhead_point.y }};
     var easting = {{ hike.trailhead_point.x }};
-    console.log(hike.trailhead_point.x, hike.trailhead_point.y)
+    console.log({{hike.trailhead_point.x}}, {{hike.trailhead_point.y}})
 
     var mymap = L.map('map').setView([northing, easting], 12);
 
