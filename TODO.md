@@ -13,3 +13,4 @@
 *Headers not look dumb on mobile
 *Hiking difficulty as stars rather than words
 *Persist blog filter through pagination
+*Fix GDAL
