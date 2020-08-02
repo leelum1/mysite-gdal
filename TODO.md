@@ -1,5 +1,6 @@
 # To Do
 *Bring blog posts up to speed
+*Show if blog post is published
 *Blog update view for easier editing
 *Thumbs up for blog posts
 *Add sitemaps

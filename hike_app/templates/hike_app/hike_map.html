@@ -77,7 +77,6 @@
     L.control.layers(baseMaps).addTo(map);
 
     var hikes = JSON.parse('{{ hikes_json | escapejs }}');
-    console.log(hikes);
 
     hikes.features.forEach(function(hike) {
       var slug = hike.properties.slug;
