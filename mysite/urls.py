@@ -31,6 +31,7 @@ urlpatterns = [
     path('cookies/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
+    path('googlea70085b6066e71d7.html', views.google_verify, name='verify'),
     path('', views.IndexTemplateView.as_view(), name='index'),
     path('legal/', views.LegalTemplateView.as_view(), name='legal'),
     path('contact/', views.ContactFormView.as_view(), name='contact'),

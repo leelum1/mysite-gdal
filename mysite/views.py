@@ -34,3 +34,6 @@ class ContactFormView(FormView):
             )
             return JsonResponse({"message": "Your message has bean sent. Returning to the home page now..."})
         return super().form_valid(form)
+
+def google_verify(request):
+    return render(request, 'googlea70085b6066e71d7.html')
