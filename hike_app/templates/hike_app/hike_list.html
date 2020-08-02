@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block head %}
   <title>Hiking in Trinidad and Tobago</title>
-
+  <meta name="description" content="">
   <style media="screen">
     .hike-container{
       margin-bottom: 20px;
@@ -49,7 +49,7 @@
     <h1 class="mb-3">Hiking in Trinidad and Tobago</h1>
 
     <p>Here is a list of hikes in Trinidad and Tobago. This list is not a complete list. If you would like to help expand it please contact me.</p>
-    <p><a href="{% url 'hike_app:map' %}">Click here</a> if you prefer a map view</p>
+    <p><a class="btn btn-primary" href="{% url 'hike_app:map' %}">Map view</a></p>
   </div>
 
   <div class="container-fluid">

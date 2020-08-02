@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block head %}
-    <meta name="description" content="Kevan Lee Lum, from Trinidad and Tobago">
-    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+    <meta name="description" content="Trinidad and Tobago Watersheds Map">
+    <meta name="keywords" content="Trinidad, Tobago, Watersheds, Map">
     <title>Kevan Lee Lum</title>
     <script src="https://d3js.org/d3.v4.min.js" charset="utf-8"></script>
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.2.0/mapbox-gl.js'></script>
@@ -12,6 +12,11 @@
         height: 88vh;
         width: 100%;
       }
+
+      .print-maps{
+        border: 1px solid black;
+        width: 100%;
+      }
     </style>
 {% endblock head %}
 {% block body_block %}
@@ -19,22 +24,39 @@
       <div id="map"></div>
     </section>
 
-    <section>
-      <div class="container-fluid">
+    <section class="my-5" style="text-align:center;">
+      <div class="container-fluid" style="border: 1px solid lightgrey;border-radius: 5px;margin:auto;max-width:1000px;">
         <h1 class="my-3">Trinidad and Tobago Watersheds</h1>
-        <p>If not do not see any features on the map try re-loading the page.</p>
-        <p>Mapbox, OpenStreetMap, and Github</p>
+        <p>This is an interactive map of the watersheds of Trinidad and Tobago.
+          If you do not see any features on the map try re-loading the page.</p>
+        <p>Currently I have the watersheds in geojson format, hosted on GitHub.
+          The map is displayed with MapboxGL using OpenStreetMap as the base layer.
+          In the future, I plan to put the watersheds in a PostGIS database and
+          render the map using Leaflet instead of Mapbox. I also instead to add
+          more features, making good use of geoDjango and Leaflet. If you have any
+          ideas for features you would like to see, send me a message!
+        </p>
       </div>
     </section>
 
     <section>
       <div class="container-fluid">
-        <a href="{% static 'images/gis/Trinidad_Watersheds.jpg' %}">
-          <img src="{% static 'images/gis/Trinidad_Watersheds.jpg' %}" height="300" alt="Trinidad Watersheds">
-        </a>
-        <a href="{% static 'images/gis/Tobago_Watersheds.jpg' %}">
-          <img src="{% static 'images/gis/Tobago_Watersheds.jpg' %}" height="300" alt="Tobago Watersheds">
-        </a>
+        <h4 class="mb-3">Printer-friendly Maps</h4>
+        <p>These maps are from
+          <a href="http://www.adoptarivertt.com" target="_blank">Trinidad's Adopt-a-River Programme</a>.
+        </p>
+        <div class="row">
+          <div class="col-lg-6 col-md-12">
+            <a href="{% static 'images/gis/Trinidad_Watersheds.jpg' %}">
+              <img class="print-maps" src="{% static 'images/gis/Trinidad_Watersheds.jpg' %}" alt="Trinidad Watersheds">
+            </a>
+          </div>
+          <div class="col-lg-6 col-md-12">
+            <a href="{% static 'images/gis/Tobago_Watersheds.jpg' %}">
+              <img class="print-maps" src="{% static 'images/gis/Tobago_Watersheds.jpg' %}" alt="Tobago Watersheds">
+            </a>
+          </div>
+        </div>
       </div>
 
     </section>
