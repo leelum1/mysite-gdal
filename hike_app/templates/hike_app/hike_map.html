@@ -84,9 +84,9 @@
 
       marker = new L.marker(hike.geometry.coordinates)
                 .addTo(map)
-                .bindPopup("<img class='popup-img' src=" + {% get_media_prefix %} + hike.properties.cover + " alt=''>" +
-                "<p class='hike-popup-title mt-2 mb-1'>" + hike.properties.name + "</p>" +
-                "<p class='my-0'>Difficulty: " + hike.properties.difficulty + "</p>" +
+                .bindPopup("<img class='popup-img' src=" + {% get_media_prefix %} + hike.properties.cover + " alt=''>\n" +
+                "<p class='hike-popup-title mt-2 mb-1'>" + hike.properties.name + "</p>\n" +
+                "<p class='my-0'>Difficulty: " + hike.properties.difficulty + "</p>\n" +
                 "<a class='hike-popup-link' href=" + url_mask + ">More Details</a>");
     });
   </script>

@@ -4,7 +4,6 @@
 *Blog update view for easier editing
 *Thumbs up for blog posts
 *Add sitemaps
-*Google Analytics
 *Search console
 *Legal so nobody sues me for hiking info
 *Steelbands app
