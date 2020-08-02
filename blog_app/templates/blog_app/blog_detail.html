@@ -46,7 +46,7 @@
 {% endblock head %}
 {% block body_block %}
   {% if post.cover %}
-    <div id="cover"></div>
+    <div id="cover" title="{{ post.cover_caption }}"></div>
   {% endif %}
   <div class="container-fluid">
     <div class="row">

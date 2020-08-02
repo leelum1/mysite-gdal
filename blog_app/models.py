@@ -18,6 +18,7 @@ class Post(models.Model):
     is_private = models.BooleanField(default=False)
     is_published = models.BooleanField(default=False)
     cover = models.ImageField(upload_to='blog_images/', blank=True)
+    cover_caption = models.CharField(max_length=512, blank=True)
     text = MarkdownxField()
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
