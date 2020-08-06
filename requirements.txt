@@ -4,7 +4,6 @@ Django==3.0.8
 django-debug-toolbar==2.2
 django-markdown2==0.3.1
 django-markdownx==3.0.1
-django-multiselectfield==0.1.12
 django-storages==1.9.1
 django-widget-tweaks==1.4.8
 docutils==0.15.2

@@ -2,6 +2,7 @@
 *Bring blog posts up to speed
 *Show if blog post is published
 *Blog update view for easier editing
+*Blog detail better layout
 *Thumbs up for blog posts
 *Search console
 *Legal so nobody sues me for hiking info
