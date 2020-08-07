@@ -50,5 +50,5 @@ STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, STATIC_LOCATION)
 STATICFILES_STORAGE = 'custom_storages.StaticStorage'
 
 PUBLIC_MEDIA_LOCATION = 'media'
-MEDIA_URL = "https://%s/%s" % (AWS_S3_CUSTOM_DOMAIN, PUBLIC_MEDIA_LOCATION)
+MEDIA_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, PUBLIC_MEDIA_LOCATION)
 DEFAULT_FILE_STORAGE = 'custom_storages.PublicMediaStorage'
