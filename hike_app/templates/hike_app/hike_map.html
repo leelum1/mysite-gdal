@@ -80,7 +80,7 @@
 
     hikes.features.forEach(function(hike) {
       var slug = hike.properties.slug;
-      var hike_cover = {% get_media_prefix %} + hike.properties.cover;
+      var hike_cover = String({% get_media_prefix %}+"/") + hike.properties.cover;
       var url_mask = "{% url 'hike_app:detail' slug='Couva' %}".replace('Couva', slug);
       var popup_content = "<img class='popup-img' src=" + hike_cover + " alt=''>\
       <p class='hike-popup-title mt-2 mb-1'>" + hike.properties.name + "</p>\
