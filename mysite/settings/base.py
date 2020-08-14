@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     'blog_app',
     'hike_app',
     # 'steelbands_app',
+    'watershed_app',
     'django_markdown2',
     'markdownx',
     'multiselectfield',

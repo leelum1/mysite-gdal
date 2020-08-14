@@ -8,6 +8,8 @@
 *Legal so nobody sues me for hiking info
 *Steelbands app
 *Watersheds app with geodjango features
+*Leaflet measure plugin
 *Headers not look dumb on mobile
 *Hiking difficulty as stars rather than words
 *Persist blog filter through pagination
+*Install same version of GDAL locally

@@ -1,0 +1,16 @@
+#basemenu{
+  position: absolute;
+  width:100px;
+  height:100px;
+  bottom: 0px;
+  right: 0px;
+  margin-right: 10px;
+  margin-bottom: 25px;
+  z-index: 20;
+}
+
+#basemenu:hover{
+  cursor: pointer;
+  outline: lightgrey solid 3px;
+  transition: outline 0.3s;
+}

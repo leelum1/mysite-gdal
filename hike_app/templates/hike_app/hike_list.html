@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 {% block head %}
   <title>Hiking in Trinidad and Tobago</title>
   <meta name="description" content="">
@@ -66,7 +67,12 @@
                 <div class="" style="height:250px;"></div>
               {% endif %}
               <h4 class="">{{ hike.name }}</h4>
-              <p class="">Difficulty: {{ hike.get_difficulty_display }}</p>
+              <div class="">Difficulty: {{ hike.difficulty }}
+                {% for x in hike.difficulty %}
+                  <img src="{% static 'images/Full_Star_Yellow.svg' %}" height=20 alt="">
+                  <img src="{% static 'images/Empty_Star.svg' %}" height=20 alt="">
+                {% endfor %}
+              </div>
             </div>
           </a>
         </div>
@@ -77,5 +83,10 @@
   </div>
 {% endblock body_block %}
 {% block javascript %}
-
+  <script type="text/javascript">
+    function functionName() {
+      let max_diff = 5;
+      return max_diff;
+    }
+  </script>
 {% endblock javascript %}

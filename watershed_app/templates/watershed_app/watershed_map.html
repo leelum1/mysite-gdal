@@ -1,0 +1,326 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+    <meta name="description" content="Trinidad and Tobago Watersheds Map">
+    <meta name="keywords" content="Trinidad, Tobago, Watersheds, Map">
+    <title>Kevan Lee Lum</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <script src="https://d3js.org/d3.v4.min.js" charset="utf-8"></script>
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
+    <link rel="stylesheet" href="{% static 'css/map.css' %}">
+    <style media="screen">
+      #map{
+        height: 88vh;
+        width: 100%;
+      }
+
+      #menu {
+        background: #fff;
+        position: absolute;
+        z-index: 1;
+        top: 10px;
+        right: 10px;
+        border-radius: 3px;
+        width: 120px;
+        border: 1px solid rgba(0, 0, 0, 0.4);
+        font-family: 'Open Sans', sans-serif;
+      }
+
+      #menu a {
+        font-size: 13px;
+        color: #404040;
+        display: block;
+        margin: 0;
+        padding: 0;
+        padding: 10px;
+        text-decoration: none;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+        text-align: center;
+      }
+
+      #menu a:last-child {
+        border: none;
+      }
+
+      #menu a:hover {
+        background-color: #f8f8f8;
+        color: #404040;
+      }
+
+      #menu a.active {
+        background-color: #3887be;
+        color: #ffffff;
+      }
+
+      #menu a.active:hover {
+        background: #3074a4;
+      }
+
+      .print-maps{
+        border: 1px solid black;
+        width: 100%;
+      }
+    </style>
+{% endblock head %}
+{% block body_block %}
+    <section>
+      <div id="map">
+        <nav id="menu"></nav>
+        <img id="basemenu" title="Switch basemap" onclick="switchBase()"/>
+      </div>
+
+    </section>
+
+    <section class="my-5" style="text-align:center;">
+      <div class="container-fluid" style="border: 1px solid lightgrey;border-radius: 5px;margin:auto;max-width:1000px;">
+        <h1 class="my-3">Trinidad and Tobago Watersheds</h1>
+        <p><strong>Disclaimer:</strong> Any information presented on this website
+          is of my own creation and not from an official source. It is to be only
+          used for educational purposes. It is not to be considered to be accurate
+          or reliable. For official data, please contact the relevant agencie.</p>
+
+        <p>This is an interactive map of the watersheds of Trinidad and Tobago.
+          If you do not see any features on the map try re-loading the page.</p>
+
+        <p>Watersheds are shown in purple. The labels appear as you zoom in along
+          with Rivers. You have the option to toggle isohyets.</p>
+
+        <p>Currently I have the watersheds in geojson format, hosted on GitHub.
+          The map is displayed with MapboxGL using OpenStreetMap as the base layer.
+          If you have any ideas for features you would like to see, send me a message!
+        </p>
+      </div>
+    </section>
+
+    <section>
+      <div class="container-fluid">
+        <h4 class="mb-3">Printer-friendly Maps</h4>
+        <p>These maps are from
+          <a href="http://www.adoptarivertt.com" target="_blank">Trinidad's Adopt-a-River Programme</a>.
+          Please support their work!
+        </p>
+        <div class="row">
+          <div class="col-lg-6 col-md-12">
+            <a href="{% static 'images/gis/Trinidad_Watersheds.jpg' %}">
+              <img class="print-maps" src="{% static 'images/gis/Trinidad_Watersheds.jpg' %}" alt="Trinidad Watersheds">
+            </a>
+          </div>
+          <div class="col-lg-6 col-md-12">
+            <a href="{% static 'images/gis/Tobago_Watersheds.jpg' %}">
+              <img class="print-maps" src="{% static 'images/gis/Tobago_Watersheds.jpg' %}" alt="Tobago Watersheds">
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </section>
+{% endblock body_block %}
+{% block javascript %}
+  <script src="{% static 'js/geoviewport.js' %}"></script>
+  <script src="{% static 'js/mapbox_map.js' %}" charset="utf-8"></script>
+
+  <script type="text/javascript">
+    $(document).ready(function(){
+      const HAS = {1:"North Coast",
+             2:"North Oropouche",
+             3:"Nariva",
+             4:"Ortoire",
+             5:"Southern Range",
+             6:"Cedros Peninsula",
+             7:"South Oropouche",
+             8:"Central West Coast",
+             9:"Western Peninsula",
+             11:"Leeward",
+             12:"East Coast",
+             13:"Windward",
+             14:"Courland",
+             15:"Lowlands"};
+
+      $(document).ready(function(){
+        //From d3-queue. Ensure both datasets are loaded and then do stuff
+        d3.queue()
+            .defer(d3.json, "https://raw.githubusercontent.com/leelum1/geojson/master/Watersheds.geojson")
+            .defer(d3.json, "https://raw.githubusercontent.com/leelum1/geojson/master/Rivers.geojson")
+            .defer(d3.json, "https://raw.githubusercontent.com/leelum1/geojson/master/Isohyetals.geojson")
+            .await(ready);
+
+        function ready(error, watershedData, riversData, isohyetsData) {
+          if (error) throw error;
+            map.addLayer({
+              'id': 'Watersheds',
+              'type': 'fill',
+              'source': {
+                'type': 'geojson',
+                'data': watershedData
+              },
+              'layout': {
+                'visibility': 'visible',
+              },
+              'paint': {
+                'fill-color': 'rgba(0, 0, 0, 0)',
+                'fill-outline-color': 'rgba(200, 100, 240, 1)'
+              }
+            });
+
+            map.addLayer({
+              "id": "WatershedsLabels",
+              "type": "symbol",
+              'source': {
+                'type': 'geojson',
+                'data': watershedData
+              },
+              "minzoom": 10,
+              "layout": {
+                "symbol-placement": "point",
+                "text-font": ["Arial Unicode MS Regular"],
+                "text-field": '{Name}' + " Watershed",
+                "text-size": 11,
+                "text-anchor": "bottom",
+                "text-max-angle": 30,
+                "visibility": 'visible'
+              }
+            });
+
+            map.addLayer({
+              'id': 'Rivers',
+              'type': 'line',
+              'source': {
+                'type': 'geojson',
+                'data': riversData
+              },
+              "minzoom": 11,
+              "layout": {
+                  "line-join": "round",
+                  "line-cap": "round",
+                  'visibility': 'visible',
+              },
+              "paint": {
+                  "line-color": "#88D5F7",
+                  "line-width": 2
+              }
+            });
+
+            map.addLayer({
+                "id": "RiversLabels",
+                "type": "symbol",
+                'source': {
+                  'type': 'geojson',
+                  'data': riversData
+                },
+                "minzoom": 11,
+                "layout": {
+                  "symbol-placement": "line",
+                  "text-font": ["Arial Unicode MS Regular"],
+                  "text-field": '{Name}' + " River",
+                  "text-size": 11,
+                  "text-anchor": "bottom",
+                  "text-max-angle": 30,
+                  "visibility": 'visible'
+                },
+                "paint": {
+                  "text-color": "#2299CE",
+                }
+              });
+
+
+              map.addLayer({
+                  'id': 'Isohyets',
+                  'type': 'line',
+                  'source': {
+                    'type': 'geojson',
+                    'data': isohyetsData
+                  },
+                  "layout": {
+                      "line-join": "round",
+                      "line-cap": "round",
+                      'visibility': 'none',
+                  },
+                  "paint": {
+                      "line-color": "#ff69b4",
+                      "line-width": 2
+                  }
+                });
+
+                map.addLayer({
+                  "id": "IsohyetsLabels",
+                  "type": "symbol",
+                  'source': {
+                    'type': 'geojson',
+                    'data': isohyetsData
+                  },
+                  "minzoom": 8,
+                  "layout": {
+                    "symbol-placement": "line",
+                    "text-font": ["Open Sans Italic"],
+                    "text-field": '{Rainfall}' + " mm", // part 2 of this is how to do it
+                    "text-size": 12,
+                    "text-anchor": "bottom",
+                    "text-max-angle": 30,
+                    "visibility": 'none'
+                  }
+                });
+
+          // Create a popup, but don't add it to the map yet.
+          var popup = new mapboxgl.Popup();
+
+          map.on('mouseover', 'Watersheds', function() {
+            map.getCanvas().style.cursor = 'pointer';
+          });
+
+          map.on('click', 'Watersheds', function(e) {
+            var xCoordinate = e.features[0].properties.CentroidX;
+            var yCoordinate = e.features[0].properties.CentroidY;
+            // Change the cursor style as a UI indicator.
+
+            popup
+              .setLngLat([xCoordinate, yCoordinate])
+              .setHTML("<p class='watershed'>" + e.features[0].properties.Name + " Watershed</p><table><tr><td>HA</td><td>" + e.features[0].properties.HA + " - " + HAS[e.features[0].properties.HA] + "</td></tr><tr><td>Area</td><td>" + (e.features[0].properties.Area/1000000).toFixed(1) + " km<sup>2</sup></td></tr></table>")
+              .addTo(map);
+          });
+
+          map.on('mouseleave', 'Watersheds', function() {
+            map.getCanvas().style.cursor = '';
+          });
+
+          // enumerate ids of the layers
+          var toggleableLayerIds = ['Watersheds', 'Isohyets'];
+
+          // set up the corresponding toggle button for each layer
+          for (var i = 0; i < toggleableLayerIds.length; i++) {
+            var id = toggleableLayerIds[i];
+
+            var link = document.createElement('a');
+            link.href = '#';
+            link.className = 'active';
+            link.textContent = id;
+
+            link.onclick = function(e) {
+              var clickedLayer = this.textContent;
+              e.preventDefault();
+              e.stopPropagation();
+
+              var clickedLabels = clickedLayer + "Labels";
+
+              var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
+
+              // toggle layer visibility by changing the layout object's visibility property
+              if (visibility === 'visible') {
+                map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+                map.setLayoutProperty(clickedLabels, 'visibility', 'none');
+                this.className = '';
+              } else {
+                this.className = 'active';
+                map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+                map.setLayoutProperty(clickedLabels, 'visibility', 'visible');
+              }
+            };
+
+            var layers = document.getElementById('menu');
+            layers.appendChild(link);
+          }
+        };
+      });
+    });
+  </script>
+{% endblock javascript %}

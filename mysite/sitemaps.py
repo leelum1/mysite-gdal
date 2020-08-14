@@ -12,7 +12,7 @@ class StaticViewSitemap(Sitemap):
                 'legal',
                 'contact',
                 'blog_app:list',
-                'watersheds']
+                'watershed_app:map']
 
     def location(self, item):
         return reverse(item)

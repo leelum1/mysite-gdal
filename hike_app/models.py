@@ -5,14 +5,6 @@ from django.utils.text import slugify
 from markdownx.models import MarkdownxField
 
 class Hike(models.Model):
-    DIFFICULTY = (
-        ('1', 'Very Easy'),
-        ('2', 'Easy'),
-        ('3', 'Basic Fitness Required'),
-        ('4', 'Strenuous'),
-        ('5', 'Very Difficult'),
-    )
-
     TYPES = (
         ('Beach', 'Beach'),
         ('Mountain', 'Mountain'),
@@ -31,10 +23,17 @@ class Hike(models.Model):
         ('leeward', 'Leeward'),
     )
 
+    class Difficulty(models.IntegerChoices):
+        EASY = 1
+        PHYSICAL = 2
+        STRENUOUS = 3
+        DIFFICULT = 4
+        ADVANCED = 5
+
     name = models.CharField(max_length=255, unique=True)
     slug = models.SlugField()
     type = models.CharField(max_length=125, choices=TYPES, default='Waterfall')
-    difficulty = models.CharField(max_length=125, choices=DIFFICULTY)
+    difficulty = models.PositiveSmallIntegerField(choices=Difficulty.choices, default=3)
     region = models.CharField(max_length=125, choices=REGIONS)
     time = models.CharField(max_length=125, blank=True, null=True)
     has_parking = models.BooleanField(default=False)
