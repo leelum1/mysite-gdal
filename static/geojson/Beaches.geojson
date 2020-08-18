@@ -1,0 +1,14 @@
+{
+"type": "FeatureCollection",
+"name": "Beaches",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:EPSG::32620" } },
+"features": [
+{ "type": "Feature", "properties": { "id": null, "Name": "Maracas Beach" }, "geometry": { "type": "Point", "coordinates": [ 670677.233193526044488, 1189744.910857195034623 ] } },
+{ "type": "Feature", "properties": { "id": null, "Name": "Tyrico" }, "geometry": { "type": "Point", "coordinates": [ 671552.910324268043041, 1189613.265996678266674 ] } },
+{ "type": "Feature", "properties": { "id": null, "Name": null }, "geometry": { "type": "Point", "coordinates": [ 671552.910324268043041, 1189613.265996678266674 ] } },
+{ "type": "Feature", "properties": { "id": null, "Name": "Paragrant" }, "geometry": { "type": "Point", "coordinates": [ 663742.946954596904106, 1189300.414554487448186 ] } },
+{ "type": "Feature", "properties": { "id": null, "Name": "Las Cuevas" }, "geometry": { "type": "Point", "coordinates": [ 675832.181508539943025, 1192357.410637945169583 ] } },
+{ "type": "Feature", "properties": { "id": null, "Name": "Marianne" }, "geometry": { "type": "Point", "coordinates": [ 685675.774669177364558, 1193985.568674824666232 ] } },
+{ "type": "Feature", "properties": { "id": null, "Name": "Paria" }, "geometry": { "type": "Point", "coordinates": [ 690921.328789137070999, 1193591.486574090085924 ] } }
+]
+}

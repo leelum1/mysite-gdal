@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+  <meta name="author" content="Kevan Lee Lum">
+  <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+  <title>Beaches Trinidad and Tobago Map</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
+  <style media="screen">
+    #map{
+      height: 90vh;
+      width: 100%;
+      margin: auto;
+    }
+
+    .leaflet-popup-content{
+      min-width: 150px;
+    }
+
+    .hike-popup-title{
+      font-weight: bold;
+    }
+
+    .hike-popup-link{
+      width: 100%;
+    }
+  </style>
+{% endblock head %}
+{% block body_block %}
+  <section>
+    <div id="map"></div>
+  </section>
+
+  <section>
+    <div class="container-fluid">
+      <h1>Beaches of Trinidad and Tobago</h1>
+      <p>Mapbox, postgreSQL, PostGIS, geoDjango</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="container-fluid">
+{# static map #}
+    </div>
+  </section>
+{% endblock body_block %}
+{% block javascript %}
+  <script type="text/javascript">
+    var map = L.map('map').setView([10.5, -61.5], 10);
+
+    L.control.scale().addTo(map);
+
+    let mapboxAttr = 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>';
+    var streets = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+      attribution: mapboxAttr,
+      maxZoom: 18,
+      id: 'mapbox/streets-v11',
+      tileSize: 512,
+      zoomOffset: -1,
+        accessToken: 'pk.eyJ1IjoibGVlbHVtMSIsImEiOiJjamZmb3BzeW4wbXg2MndsOTE5MGM3Nzd3In0.aem1yMDKhuLp0fUGKhxJrg'
+    }).addTo(map);
+
+    var satellite = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+      attribution: mapboxAttr,
+      maxZoom: 18,
+      id: 'mapbox/satellite-streets-v11',
+      tileSize: 512,
+      zoomOffset: -1,
+        accessToken: 'pk.eyJ1IjoibGVlbHVtMSIsImEiOiJjamZmb3BzeW4wbXg2MndsOTE5MGM3Nzd3In0.aem1yMDKhuLp0fUGKhxJrg'
+    });
+
+    var baseMaps = {
+      "Streets": streets,
+      "Satellite": satellite
+    };
+
+    L.control.layers(baseMaps).addTo(map);
+
+    var hikes = JSON.parse('{{ hikes_json | escapejs }}');
+
+    hikes.features.forEach(function(hike) {
+      var slug = hike.properties.slug;
+      var media_prefix = "{% get_media_prefix %}";
+      var url_mask = "{% url 'hike_app:detail' slug='Couva' %}".replace('Couva', slug);
+      var popup_content = "<img class='popup-img' src=" + media_prefix + hike.properties.cover + " alt=''>\
+      <p class='hike-popup-title mt-2 mb-1'>" + hike.properties.name + "</p>\
+      <p class='my-0'>Difficulty: " + hike.properties.difficulty + "</p>\
+      <a class='hike-popup-link' href=" + url_mask + ">More Details</a>";
+
+      marker = new L.marker(hike.geometry.coordinates)
+                .addTo(map)
+                .bindPopup(popup_content);
+    });
+  </script>
+{% endblock %}

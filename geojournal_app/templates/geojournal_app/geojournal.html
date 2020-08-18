@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static %}
+{% block head %}
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <title>Home</title>
+{% endblock head %}
+{% block body_block %}
+  <div class="container-fluid">
+    <h1>Geojournal</h1>
+    <p>
+      <a class="btn btn-warning" href="{% url 'geojournal_app:create' %}">New Entry</a>
+    </p>
+  </div>
+
+  <div class="container-fluid">
+    <h4>What is Geojournal?</h4>
+    <p></p>
+  </div>
+{% endblock body_block %}
+{% block javascript %}
+
+{% endblock javascript %}

@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load static %}
+{% block head %}
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <title>Home</title>
+  <script src="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js"></script>
+  <link href="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css" rel="stylesheet" />
+  <style media="screen">
+    #map{
+      height: 80vh;
+      width: 100%;
+    }
+  </style>
+{% endblock head %}
+{% block body_block %}
+  <section>
+    <div id="map"></div>
+  </section>
+
+  <section>
+    <div class="container-fluid">
+      <h1>List View</h1>
+      {% for entry in entries %}
+        <p>Name: {{ entry.name }}</p>
+        <p>Long: {{ entry.location.1 }}</p>
+      {% endfor %}
+    </div>
+  </section>
+{% endblock body_block %}
+{% block javascript %}
+  <script type="text/javascript">
+    // Mapbox access token
+    var token = 'pk.eyJ1IjoibGVlbHVtMSIsImEiOiJjamFzNHM0cmo0bmduMnFwbHh0MXNweW5jIn0.1fUr70BuY4Kk4BERLB5Pkg';
+    mapboxgl.accessToken = token;
+
+    var map = new mapboxgl.Map({
+      container: 'map', // container id
+      style: 'mapbox://styles/mapbox/streets-v11', // style URL
+      center: [-74.5, 40], // starting position [lng, lat]
+      zoom: 3 // starting zoom
+      });
+
+    {% for entry in entries %}
+      var marker = new mapboxgl.Marker()
+        .setLngLat([{{ entry.location.x }}, {{ entry.location.y }}])
+        .addTo(map);
+    {% endfor %}
+  </script>
+{% endblock javascript %}

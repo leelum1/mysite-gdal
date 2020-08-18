@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+{% block head %}
+  <title>New Entry</title>
+  <meta name="description" content="">
+  {{form.media}}
+  <!-- <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.4.3/build/ol.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.4.3/css/ol.css" type="text/css">-->
+  <style media="screen">
+    .main{
+      max-width: 800px;
+    }
+
+    label{
+      margin-top: 20px;
+    }
+  </style>
+{% endblock head %}
+{% block body_block %}
+  <div class="container-fluid main">
+    <h1>
+      {% if not form.instance.pk %}
+        New Entry
+      {% else %}
+        Update Entry
+      {% endif %}
+    </h1>
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="form-group">
+        {% for field in form %}
+          <div class="fieldWrapper">
+            {{ field.errors }}
+            {{ field.label_tag }}
+            {% render_field field class="form-control" %}
+            {% if field.help_text %}
+            <p class="help">{{ field.help_text|safe }}</p>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+      <input type="submit" class="btn btn-success" style="width:100%;" value="Save">
+    </form>
+  </div>
+{% endblock body_block %}

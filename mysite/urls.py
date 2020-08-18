@@ -37,7 +37,9 @@ urlpatterns = [
     path('contact/', views.ContactFormView.as_view(), name='contact'),
     path('hiking/', include('hike_app.urls')),
     path('watersheds/', include('watershed_app.urls')),
+    path('beaches/', include('beach_app.urls')),
     path('blog/', include('blog_app.urls')),
+    path('geojournal/', include('geojournal_app.urls')),
     path('steelbands/', include('steelbands_app.urls')),
     path('markdownx/', include('markdownx.urls')),
 ]

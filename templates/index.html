@@ -71,14 +71,14 @@
       background-image: url("{% static 'images/watershed-cover.png' %}");
       background-position: center;
       background-size: cover;
-      height: 300px;
+      height: 400px;
     }
 
     #hiking-cover{
       background-image: url("{% static 'images/hiking-cover.png' %}");
       background-position: center;
       background-size: cover;
-      height: 300px;
+      height: 400px;
     }
 
     #bottom-img{
@@ -96,7 +96,7 @@
 {% block body_block %}
   <header>
     <div class="container-fluid">
-      <h1 id="stroke">Hello</h1>
+      <!--<h1 id="stroke">Hello</h1>-->
     </div>
   </header>
 
@@ -170,37 +170,64 @@
   </section>
 
   <section>
-    <div class="container-fluid py-5" id="gis">
-      <h2>GIS Projects</h2>
-      <p>Here's a couple of GIS projects that I worked on. There will hopefully be more in the future.</p>
+    <div class="py-5" id="gis">
+      <div class="container-fluid py-5">
+        <h1 class="display-4 mb-3">GIS Projects</h1>
+        <p style="margin:auto;text-align:center;">Here's a couple of GIS projects that I worked on. There will hopefully be more in the future.</p>
+      </div>
     </div>
 
-    <div class="row no-gutters" style="border-top:1px solid black;">
-      <div class="col-lg-5 col-md-12">
-        <div class="" id="watershed-cover"></div>
-      </div>
-      <div class="col-lg-7 col-md-12">
-        <div class="container-fluid" style="text-align:center;">
-          <h4 style="text-decoration:underline;">Trinidad and Tobago Watersheds</h4>
-          <p style="text-align:center;">An interactive map of the watersheds of Trinidad and Tobago</p>
-          <a class="btn btn-primary my-3" style="width:200px;" href="{% url 'watershed_app:map' %}">See Map</a>
+    <div class="container-fluid my-5">
+      <div class="row">
+        <div class="col-lg-6 col-md-12">
+          <div class="" id="watershed-cover"></div>
+        </div>
+        <div class="col-lg-6 col-md-12">
+          <div class="container-fluid">
+            <h4 style="text-decoration:underline;">Trinidad and Tobago Watersheds</h4>
+            <p>An interactive map of the watersheds of Trinidad and Tobago. View watershed boundaries and rivers. For educational purposes only.</p>
+            <a class="btn btn-primary my-3" style="width:200px;" href="{% url 'watershed_app:map' %}">See Map</a>
+          </div>
         </div>
       </div>
     </div>
 
-    <div class="row no-gutters" style="border-top:1px solid black;">
-      <div class="col-lg-5 col-md-12">
-        <div class="" id="hiking-cover"></div>
-      </div>
-      <div class="col-lg-7 col-md-12">
-        <div class="container-fluid" style="text-align:center;">
-          <h4 style="text-decoration:underline;">Hiking in Trinidad</h4>
-          <p style="text-align:center;">An interactive map of hikes in Trinidad and Tobago.</p>
-          <a class="btn btn-primary my-3" style="width:200px;" href="{% url 'hike_app:map'%}">See Map</a>
+    <div class="container-fluid mb-5">
+      <div class="row">
+        <div class="col-lg-6 col-md-12">
+          <div class="" id="hiking-cover"></div>
+        </div>
+        <div class="col-lg-6 col-md-12">
+          <div class="container-fluid">
+            <h4 style="text-decoration:underline;">Hiking in Trinidad</h4>
+            <p>An interactive map of hikes in Trinidad and Tobago.</p>
+            <a class="btn btn-primary my-3" style="width:200px;" href="{% url 'hike_app:map'%}">See Map</a>
+          </div>
         </div>
       </div>
     </div>
+
+    <!--<div class="container-fluid mb-5">
+      <div class="row">
+        <div class="col-lg-6 col-md-12">
+          <div class="" id="beaches-cover"></div>
+        </div>
+        <div class="col-lg-6 col-md-12">
+          <div class="container-fluid">
+            <h4 style="text-decoration:underline;">Trinidad and Tobago Beaches</h4>
+            <p>An interactive map of Trinidad and Tobago's beaches.</p>
+            <a class="btn btn-primary my-3" style="width:200px;" href="{% url 'beach_app:map'%}">See Map</a>
+          </div>
+        </div>
+      </div>
+    </div>-->
   </section>
+
+  <!--<section>
+    <div class="container-fluid">
+      <a class="btn btn-primary" href="{% url 'geojournal_app:geojournal' %}">Geojournal</a>
+    </div>
+  </section>-->
 
   <section>
     <div class="container-fluid" id="bottom-img">

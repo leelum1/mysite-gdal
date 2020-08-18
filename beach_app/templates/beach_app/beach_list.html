@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% load static %}
+{% block head %}
+  <title>Hiking in Trinidad and Tobago</title>
+  <meta name="description" content="">
+  <style media="screen">
+    .hike-container{
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .hike-cover{
+      background-color: black;
+      height: 250px;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .hike{
+      background-color: white;
+      border: 1px solid grey;
+      margin: auto;
+      padding: 20px 20px 30px 20px;
+      position: relative;
+      width: 100%;
+    }
+
+    a{
+      color: black;
+      text-decoration:none;
+    }
+
+    .hike:hover{
+      background-color: lightgrey;
+      transition: background-color 0.3s;
+    }
+
+    .hike-link:hover{
+      text-decoration: none;
+      color: black;
+    }
+
+    .description{
+      margin-top: 10px;
+    }
+  </style>
+{% endblock head %}
+{% block body_block %}
+  <div class="container-fluid">
+    <h1 class="mb-3">Hiking in Trinidad and Tobago</h1>
+
+    <p>Here is a list of hikes in Trinidad and Tobago. This list is not a complete list. If you would like to help expand it please contact me.</p>
+    <p><a class="btn btn-primary" href="{% url 'hike_app:map' %}">Map view</a></p>
+  </div>
+
+  <div class="container-fluid">
+    <div class="row">
+      {% for hike in hikes %}
+        <div class="hike-container col-xl-4 col-md-6 col-sm-12 {{ hike.type }}">
+          <a class="post-link" href="{% url 'hike_app:detail' slug=hike.slug %}">
+            <div class="hike">
+              {% if hike.cover %}
+                <div class="hike-cover">
+                  <img src="{{ hike.cover.url }}" height="250" alt="">
+                </div>
+              {% else %}
+                <div class="" style="height:250px;"></div>
+              {% endif %}
+              <h4 class="">{{ hike.name }}</h4>
+              <div class="">Difficulty: {{ hike.difficulty }}
+                  <img src="{% static 'images/Full_Star_Yellow.svg' %}" height=20 alt="">
+                  <img src="{% static 'images/Empty_Star.svg' %}" height=20 alt="">
+              </div>
+            </div>
+          </a>
+        </div>
+      {% empty %}
+        <p>No posts to show as yet :(</p>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock body_block %}
+{% block javascript %}
+  <script type="text/javascript">
+    function functionName() {
+      let max_diff = 5;
+      return max_diff;
+    }
+  </script>
+{% endblock javascript %}

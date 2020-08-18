@@ -68,10 +68,8 @@
               {% endif %}
               <h4 class="">{{ hike.name }}</h4>
               <div class="">Difficulty: {{ hike.difficulty }}
-                {% for x in hike.difficulty %}
                   <img src="{% static 'images/Full_Star_Yellow.svg' %}" height=20 alt="">
                   <img src="{% static 'images/Empty_Star.svg' %}" height=20 alt="">
-                {% endfor %}
               </div>
             </div>
           </a>

@@ -18,6 +18,7 @@ class HikeDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         ctx = super(HikeDetailView, self).get_context_data(**kwargs)
+        print(Hike.id)
         ctx['images'] = HikeImage.objects.filter(hike=self.get_object())
         ctx['similar_hikes'] = Hike.objects.filter(region=self.get_object().region).exclude(id=self.get_object().id)[:3]
         return ctx
